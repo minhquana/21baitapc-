@@ -1,0 +1,25 @@
+# 21baitapc-
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int arr[] = {2, 3, 4, 10, 40};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int x = 10; // giá trị cần tìm kiếm
+
+    // tìm kiếm tuyến tính
+    int i;
+    for (i = 0; i < n; i++)
+    {
+        if (arr[i] == x)
+        {
+            cout << "Giá trị " << x << " được tìm thấy tại vị trí " << i << endl;
+            break;
+        }
+    }
+    if (i == n)
+        cout << "Không tìm thấy giá trị " << x << " trong mảng." << endl;
+
+    return 0;
+}
