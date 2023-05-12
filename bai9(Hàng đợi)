@@ -1,0 +1,87 @@
+#include <iostream>
+using namespace std;
+
+#define MAX_SIZE 100
+
+class Queue {
+private:
+    int arr[MAX_SIZE];
+    int front, rear;
+
+public:
+    Queue() {
+        front = -1; // Khởi tạo hàng đợi rỗng
+        rear = -1;
+    }
+
+    bool isEmpty() {
+        return (front == -1 && rear == -1);
+    }
+
+    bool isFull() {
+        return (rear == MAX_SIZE - 1);
+    }
+
+    void enqueue(int value) {
+        if (isFull()) {
+            cout << "Hang doi da day. Khong the them phan tu moi.\n";
+        } else {
+            if (isEmpty()) {
+                front = 0; // Nếu hàng đợi trống, cập nhật front
+            }
+            rear++;
+            arr[rear] = value;
+            cout << "Da them " << value << " vao hang doi.\n";
+        }
+    }
+
+    void dequeue() {
+        if (isEmpty()) {
+            cout << "Hang doi rong. Khong the lay phan tu.\n";
+        } else if (front == rear) {
+            front = -1;
+            rear = -1;
+        } else {
+            front++;
+        }
+    }
+
+    void printQueue() {
+        if (isEmpty()) {
+            cout << "Hang doi rong. Khong co phan tu de in.\n";
+        } else {
+            cout << "Cac phan tu trong hang doi: ";
+            for (int i = front; i <= rear; i++) {
+                cout << arr[i] << " ";
+            }
+            cout << endl;
+        }
+    }
+};
+
+int main() {
+    Queue queue;
+    int n, value;
+
+    cout << "Nhap so phan tu ban muon them vao hang doi: ";
+    cin >> n;
+
+    cout << "Nhap " << n << " phan tu vao hang doi:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> value;
+        queue.enqueue(value);
+    }
+
+    cout << "Nhap phan tu muon them vao hang doi: ";
+    cin >> value;
+    queue.enqueue(value);
+
+    cout << "Nhap phan tu muon loai bo: ";
+    cin >> value;
+    queue.dequeue();
+
+    cout << "In hang doi sau khi them va loai bo:\n";
+    queue.printQueue();
+
+    return 0;
+}
