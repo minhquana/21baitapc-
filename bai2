@@ -1,25 +1,37 @@
-# 21baitapc-
 #include <iostream>
-using namespace std;
 
-int main()
-{
-    int arr[] = {2, 3, 4, 10, 40};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    int x = 10; // giá trị cần tìm kiếm
-
-    // tìm kiếm tuyến tính
-    int i;
-    for (i = 0; i < n; i++)
-    {
-        if (arr[i] == x)
-        {
-            cout << "Giá trị " << x << " được tìm thấy tại vị trí " << i << endl;
-            break;
+// Hàm tìm kiếm tuyến tính trong mảng
+int linearSearch(int arr[], int n, int key) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == key) {
+            return i; // Trả về chỉ số của phần tử nếu tìm thấy
         }
     }
-    if (i == n)
-        cout << "Không tìm thấy giá trị " << x << " trong mảng." << endl;
+    return -1; // Trả về -1 nếu không tìm thấy phần tử
+}
+
+int main() {
+    int n;
+    std::cout << "Nhap so phan tu cua mang: ";
+    std::cin >> n;
+
+    int arr[n];
+    std::cout << "Nhap cac phan tu cua mang: ";
+    for (int i = 0; i < n; i++) {
+        std::cin >> arr[i];
+    }
+
+    int key;
+    std::cout << "Nhap phan tu can tim: ";
+    std::cin >> key;
+
+    int result = linearSearch(arr, n, key);
+
+    if (result == -1) {
+        std::cout << "Khong tim thay phan tu trong mang.\n";
+    } else {
+        std::cout << "Phan tu " << key << " duoc tim thay tai vi tri " << result << ".\n";
+    }
 
     return 0;
 }
