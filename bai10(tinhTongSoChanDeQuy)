@@ -1,0 +1,35 @@
+#include <iostream>
+
+int tinhTongSoChanDeQuy(int arr[], int size) {
+    // Trường hợp cơ bản: nếu mảng rỗng, trả về 0
+    if (size == 0) {
+        return 0;
+    }
+    
+    // Trường hợp đệ quy:
+    // Kiểm tra xem phần tử cuối cùng của mảng có phải số chẵn hay không
+    if (arr[size - 1] % 2 == 0) {
+        // Nếu là số chẵn, cộng vào tổng và gọi đệ quy với mảng có kích thước nhỏ hơn (bằng cách trừ đi 1)
+        return arr[size - 1] + tinhTongSoChanDeQuy(arr, size - 1);
+    } else {
+        // Nếu là số lẻ, bỏ qua nó và gọi đệ quy với mảng có kích thước nhỏ hơn
+        return tinhTongSoChanDeQuy(arr, size - 1);
+    }
+}
+
+int main() {
+    int n;
+    std::cout << "Nhập số phần tử trong mảng: ";
+    std::cin >> n;
+
+    int arr[n];
+    std::cout << "Nhập các phần tử của mảng: ";
+    for (int i = 0; i < n; i++) {
+        std::cin >> arr[i];
+    }
+
+    int tong = tinhTongSoChanDeQuy(arr, n);
+    std::cout << "Tổng các số chẵn trong mảng: " << tong << std::endl;
+
+    return 0;
+}
