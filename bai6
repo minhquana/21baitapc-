@@ -1,37 +1,47 @@
 #include <iostream>
 
-// Hàm hoán đổi giá trị của hai phần tử
+// Hàm để hoán đổi giá trị của hai phần tử
 void swap(int* a, int* b) {
     int temp = *a;
     *a = *b;
     *b = temp;
 }
 
-// Hàm phân chia mảng và đưa phần tử chốt (pivot) đến vị trí đúng
-int partition(int arr[], int low, int high) {
-    int pivot = arr[high];  // Chọn phần tử chốt là phần tử cuối cùng
-    int i = low - 1;        // Chỉ số của phần tử nhỏ hơn pivot
+// Hàm để sắp xếp một cây con tại vị trí i
+void heapify(int arr[], int n, int i) {
+    int largest = i;  // Khởi tạo largest là nút gốc
+    int left = 2 * i + 1;  // Chỉ số của nút con trái
+    int right = 2 * i + 2;  // Chỉ số của nút con phải
 
-    for (int j = low; j <= high - 1; j++) {
-        // Nếu phần tử hiện tại nhỏ hơn hoặc bằng pivot
-        if (arr[j] <= pivot) {
-            i++;
-            swap(&arr[i], &arr[j]);
-        }
+    // Nếu nút con trái lớn hơn nút gốc
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    // Nếu nút con phải lớn hơn nút gốc
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    // Nếu largest không phải là nút gốc
+    if (largest != i) {
+        swap(&arr[i], &arr[largest]);
+
+        // Sắp xếp lại cây con bị ảnh hưởng
+        heapify(arr, n, largest);
     }
-    swap(&arr[i + 1], &arr[high]);
-    return (i + 1);
 }
 
-// Hàm sắp xếp quick sort
-void quickSort(int arr[], int low, int high) {
-    if (low < high) {
-        // Phân chia mảng và lấy chỉ số của phần tử chốt
-        int pi = partition(arr, low, high);
+// Hàm sắp xếp Heapsort
+void heapSort(int arr[], int n) {
+    // Xây dựng cây Heap (sắp xếp lại mảng)
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
 
-        // Sắp xếp các phần tử trước và sau phần tử chốt
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
+    // Trích xuất lần lượt các phần tử từ Heap
+    for (int i = n - 1; i > 0; i--) {
+        swap(&arr[0], &arr[i]);  // Di chuyển phần tử lớn nhất (gốc) đến cuối mảng
+
+        // Sắp xếp lại cây Heap với mảng đã bị giảm kích thước
+        heapify(arr, i, 0);
     }
 }
 
