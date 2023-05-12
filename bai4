@@ -1,28 +1,43 @@
-# 21baitapc-
 #include <iostream>
 
+// Hàm để hoán đổi giá trị của hai phần tử
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Hàm để sắp xếp một mảng bằng phương pháp sắp xếp chọn trực tiếp
 void selectionSort(int arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
-        int min_idx = i;
+        int minIndex = i;
+
+        // Tìm phần tử nhỏ nhất trong mảng chưa được sắp xếp
         for (int j = i + 1; j < n; j++) {
-            if (arr[j] < arr[min_idx]) {
-                min_idx = j;
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
             }
         }
-        // Swap the minimum element with the current element
-        int temp = arr[i];
-        arr[i] = arr[min_idx];
-        arr[min_idx] = temp;
+
+        // Hoán đổi phần tử nhỏ nhất với phần tử đầu tiên của mảng chưa được sắp xếp
+        swap(&arr[minIndex], &arr[i]);
     }
 }
 
 int main() {
-    int arr[] = {41, 23, 4, 14, 56, 1};
-    int n = sizeof(arr) / sizeof(arr[0]);
+    int n;
+    std::cout << "Nhap so phan tu cua mang: ";
+    std::cin >> n;
+
+    int arr[n];
+    std::cout << "Nhap cac phan tu cua mang: ";
+    for (int i = 0; i < n; i++) {
+        std::cin >> arr[i];
+    }
 
     selectionSort(arr, n);
 
-    std::cout << "Mang da sap xep : ";
+    std::cout << "Sorted array: ";
     for (int i = 0; i < n; i++) {
         std::cout << arr[i] << " ";
     }
