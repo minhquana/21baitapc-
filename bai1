@@ -1,32 +1,49 @@
 #include <iostream>
-using namespace std;
 
-// Hàm tìm kiếm nhị phân
-int timKiemNhiPhan(int arr[], int low, int high, int x) {
-    if (high >= low) {
-        int mid = (low + high) / 2;
-        // Nếu phần tử ở giữa bằng x, trả về vị trí của phần tử đó
-        if (arr[mid] == x)
+// Hàm tìm kiếm nhị phân trong mảng đã sắp xếp
+int binarySearch(int arr[], int left, int right, int key) {
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        // Nếu phần tử được tìm thấy tại vị trí mid
+        if (arr[mid] == key) {
             return mid;
-        // Nếu phần tử ở giữa lớn hơn x, tìm kiếm trong nửa đầu mảng
-        else if (arr[mid] > x)
-            return timKiemNhiPhan(arr, low, mid - 1, x);
-        // Nếu phần tử ở giữa nhỏ hơn x, tìm kiếm trong nửa sau mảng
-        else
-            return timKiemNhiPhan(arr, mid + 1, high, x);
+        }
+
+        // Nếu phần tử lớn hơn key, ta tiếp tục tìm kiếm bên trái của mid
+        if (arr[mid] > key) {
+            right = mid - 1;
+        }
+        // Ngược lại, ta tiếp tục tìm kiếm bên phải của mid
+        else {
+            left = mid + 1;
+        }
     }
-    // Nếu không tìm thấy x trong mảng, trả về -1
-    return -1;
+    return -1; // Trả về -1 nếu không tìm thấy phần tử
 }
 
 int main() {
-    int arr[] = {2, 3, 4, 10, 40};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    int x = 10;
-    int result = timKiemNhiPhan(arr, 0, n - 1, x);
-    if (result == -1)
-        cout << "Khong tim thay " << x << " trong mang";
-    else
-        cout << x << " duoc tim thay tai vi tri " << result;
+    int n;
+    std::cout << "Nhap so phan tu cua mang: ";
+    std::cin >> n;
+
+    int arr[n];
+    std::cout << "Nhap cac phan tu cua mang (da sap xep tang dan): ";
+    for (int i = 0; i < n; i++) {
+        std::cin >> arr[i];
+    }
+
+    int key;
+    std::cout << "Nhap phan tu can tim: ";
+    std::cin >> key;
+
+    int result = binarySearch(arr, 0, n - 1, key);
+
+    if (result == -1) {
+        std::cout << "Khong tim thay phan tu trong mang.\n";
+    } else {
+        std::cout << "Phan tu " << key << " duoc tim thay tai vi tri " << result << ".\n";
+    }
+
     return 0;
 }
